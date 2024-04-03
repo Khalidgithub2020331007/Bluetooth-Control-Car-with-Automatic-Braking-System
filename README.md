@@ -5,3 +5,7 @@ https://www.youtube.com/watch?v=Q36NbjPMV5k
 ```
 # Bluetooth Documentation 
     https://howtomechatronics.com/tutorials/arduino/arduino-and-hc-05-bluetooth-module-tutorial/
+
+
+# For #include <AFMotor.h>
+    https://github.com/adafruit/Adafruit-Motor-Shield-library

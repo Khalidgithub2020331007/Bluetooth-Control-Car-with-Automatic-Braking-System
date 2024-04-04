@@ -9,3 +9,9 @@ https://www.youtube.com/watch?v=Q36NbjPMV5k
 
 # For #include <AFMotor.h>
     https://github.com/adafruit/Adafruit-Motor-Shield-library
+
+# Language Reference
+    https://www.arduino.cc/reference/en/
+
+# Programming 
+    https://docs.arduino.cc/programming/

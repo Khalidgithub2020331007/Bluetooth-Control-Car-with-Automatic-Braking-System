@@ -16,5 +16,5 @@ https://www.youtube.com/watch?v=Q36NbjPMV5k
 # Programming 
     https://docs.arduino.cc/programming/
 # Install Arduino
-        sudo apt update
-        sudo snap install arduino
+    sudo apt update
+    sudo snap install arduino

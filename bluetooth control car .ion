@@ -1,0 +1,120 @@
+#include <SoftwareSerial.h>
+
+// Motor pin assignments
+const int MOTOR1_PWM = 3;
+const int MOTOR1_DIR = 4;
+const int MOTOR2_PWM = 5;
+const int MOTOR2_DIR = 6;
+
+// Ultrasonic sensor pin assignments
+const int TRIGGER_PIN = 7;
+const int ECHO_PIN = 8;
+
+// Bluetooth module pin assignments
+const int BT_RX = 10;
+const int BT_TX = 11;
+
+// Bluetooth commands
+const char FORWARD = 'F';
+const char BACKWARD = 'B';
+const char LEFT = 'L';
+const char RIGHT = 'R';
+const char STOP = 'S';
+
+// Create a SoftwareSerial object for Bluetooth communication
+SoftwareSerial bluetooth(BT_RX, BT_TX);
+
+void setup() {
+  // Set motor pins as output
+  pinMode(MOTOR1_PWM, OUTPUT);
+  pinMode(MOTOR1_DIR, OUTPUT);
+  pinMode(MOTOR2_PWM, OUTPUT);
+  pinMode(MOTOR2_DIR, OUTPUT);
+  
+  // Set ultrasonic sensor pins
+  pinMode(TRIGGER_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+
+  // Set Bluetooth baud rate
+  bluetooth.begin(9600);
+}
+
+void loop() {
+  if (bluetooth.available() > 0) {
+    char command = bluetooth.read();
+
+    // Execute motor control based on received command
+    switch (command) {
+      case FORWARD:
+        moveForward();
+        break;
+      case BACKWARD:
+        moveBackward();
+        break;
+      case LEFT:
+        turnLeft();
+        break;
+      case RIGHT:
+        turnRight();
+        break;
+      case STOP:
+        stopMotors();
+        break;
+      default:
+        break;
+    }
+  }
+  
+  // Check for obstacle
+  if (detectObstacle() < 20) {  // If obstacle is within 20cm
+    stopMotors();  // Stop the car
+  }
+}
+
+// Functions to control motor movement
+void moveForward() {
+  digitalWrite(MOTOR1_DIR, HIGH);
+  digitalWrite(MOTOR2_DIR, HIGH);
+  analogWrite(MOTOR1_PWM, 200);  // Adjust PWM value for desired speed
+  analogWrite(MOTOR2_PWM, 200);
+}
+
+void moveBackward() {
+  digitalWrite(MOTOR1_DIR, LOW);
+  digitalWrite(MOTOR2_DIR, LOW);
+  analogWrite(MOTOR1_PWM, 200);
+  analogWrite(MOTOR2_PWM, 200);
+}
+
+void turnLeft() {
+  digitalWrite(MOTOR1_DIR, LOW);
+  digitalWrite(MOTOR2_DIR, HIGH);
+  analogWrite(MOTOR1_PWM, 150);
+  analogWrite(MOTOR2_PWM, 150);
+}
+
+void turnRight() {
+  digitalWrite(MOTOR1_DIR, HIGH);
+  digitalWrite(MOTOR2_DIR, LOW);
+  analogWrite(MOTOR1_PWM, 150);
+  analogWrite(MOTOR2_PWM, 150);
+}
+
+void stopMotors() {
+  analogWrite(MOTOR1_PWM, 0);
+  analogWrite(MOTOR2_PWM, 0);
+}
+
+// Function to detect obstacle using ultrasonic sensor
+int detectObstacle() {
+  digitalWrite(TRIGGER_PIN, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TRIGGER_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIGGER_PIN, LOW);
+  
+  long duration = pulseIn(ECHO_PIN, HIGH);
+  int distance = duration * 0.034 / 2; // Convert to centimeters
+  
+  return distance;
+}

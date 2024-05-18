@@ -5,7 +5,7 @@ AF_DCMotor motor1(1, MOTOR12_1KHZ);
 AF_DCMotor motor3(3, MOTOR34_1KHZ);
 
 const int trigPin = 7;
-const int echoPin = 6;
+const int echoPin = 8;
 
 int val;
 int Speed = 255;
@@ -91,16 +91,16 @@ void Stop() {
 }
 
 int getDistance() {
-  // Clears the trigPin
+  
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
 
-  // Sets the trigPin on HIGH state for 10 microseconds
+  
   digitalWrite(trigPin, HIGH);
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
 
-  // Reads the echoPin, returns the sound wave travel time in microseconds
+  
   duration = pulseIn(echoPin, HIGH);
 
   // Calculating the distance

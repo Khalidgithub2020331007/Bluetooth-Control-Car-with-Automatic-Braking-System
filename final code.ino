@@ -55,14 +55,14 @@ void loop() {
 void forward() {
   motor1.setSpeed(Speed);
   motor1.run(FORWARD);
-  motor3.setSpeed(Speed);
+  motor3.setSpeed(253);
   motor3.run(FORWARD);
 }
 
 void back() {
   motor1.setSpeed(Speed);
   motor1.run(BACKWARD);
-  motor3.setSpeed(Speed);
+  motor3.setSpeed(253);
   motor3.run(BACKWARD);
 }
 
@@ -71,7 +71,7 @@ void left() {
   motor1.run(RELEASE);
   
   motor3.setSpeed(Speed);
-  motor3.run(FORWARD);
+  motor3.run(253);
 }
 
 void right() {

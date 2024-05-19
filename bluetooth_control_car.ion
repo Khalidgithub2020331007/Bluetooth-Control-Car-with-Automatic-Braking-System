@@ -2,13 +2,10 @@
  
 //initial motors pin
 AF_DCMotor motor1(1, MOTOR12_1KHZ);
-AF_DCMotor motor2(2, MOTOR12_1KHZ);
 AF_DCMotor motor3(3, MOTOR34_1KHZ);
-AF_DCMotor motor4(4, MOTOR34_1KHZ);
  
 int val;
 int Speeed = 255;
-int sspeed=100;
  
 void setup()
 {
@@ -51,7 +48,7 @@ void forward()
 {
   motor1.setSpeed(Speeed); 
   motor1.run(FORWARD); 
-  motor3.setSpeed(Speeed);
+  motor3.setSpeed(252);
   motor3.run(FORWARD); 
 }
  
@@ -59,7 +56,7 @@ void back()
 {
   motor1.setSpeed(Speeed); 
   motor1.run(BACKWARD);   
-  motor3.setSpeed(Speeed);
+  motor3.setSpeed(252);
   motor3.run(BACKWARD);
   
 }
@@ -75,7 +72,7 @@ void left()
  
 void right()
 {
-  motor1.setSpeed(sspeed); //Define maximum velocity
+  motor1.setSpeed(Speed); //Define maximum velocity
   motor1.run(FORWARD); //rotate the motor clockwise
  
   motor3.setSpeed(0); //Define maximum velocity

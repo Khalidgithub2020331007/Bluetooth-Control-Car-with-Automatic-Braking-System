@@ -20,6 +20,10 @@ void setup()
   pinMode(echoPin, INPUT);
 }
 void loop(){
+ 
+             distance = getDistance();
+                Serial.println(distance);
+ if(distance>=20){
   if(Serial.available() > 0){
     val = Serial.read();
      
@@ -45,9 +49,10 @@ void loop(){
           if (val == 'T'){
           Stop();
           }
-  }
-             distance = getDistance();
-                Serial.println(distance);
+  }}
+ else{
+  Stop();
+ }
             
 
 }

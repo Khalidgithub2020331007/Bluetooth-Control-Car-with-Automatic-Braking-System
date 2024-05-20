@@ -72,7 +72,7 @@ void left()
  
 void right()
 {
-  motor1.setSpeed(Speed); //Define maximum velocity
+  motor1.setSpeed(Speeed); //Define maximum velocity
   motor1.run(FORWARD); //rotate the motor clockwise
  
   motor3.setSpeed(0); //Define maximum velocity

@@ -7,7 +7,7 @@
 long duration, distance;
 AF_DCMotor motor1(1, MOTOR12_1KHZ);
 AF_DCMotor motor3(3, MOTOR34_1KHZ);
-SoftwareSerial Bluetooth(0,1); // RX, TX
+SoftwareSerial Bluetooth(2,3); // RX, TX
 int val;
 int Speeed = 255;
 

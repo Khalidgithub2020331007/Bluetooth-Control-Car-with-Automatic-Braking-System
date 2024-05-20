@@ -1,13 +1,13 @@
 #include <AFMotor.h>
 #include <SoftwareSerial.h>
 
-#define echoPin 8 
-#define trigPin 7  
+#define echoPin 8
+#define trigPin 7
 
 long duration, distance;
 AF_DCMotor motor1(1, MOTOR12_1KHZ);
 AF_DCMotor motor3(3, MOTOR34_1KHZ);
-SoftwareSerial Bluetooth(0,1); // RX, TX
+SoftwareSerial Bluetooth(2, 3); // RX, TX
 int val;
 int Speeed = 255;
 
@@ -29,21 +29,23 @@ void loop() {
   duration = pulseIn(echoPin, HIGH);
   distance = duration / 58.2;
 
-  Serial.print("distance : ");
+  Serial.print("Distance: ");
   Serial.print(distance);
   Serial.println(" cm");
 
-  // Stop the car if distance is less than 20 cm
+  // Automatic braking system
   if (distance < 20) {
-    Serial.println("Back");
+    Serial.println("Obstacle detected! Reversing...");
     back();
     delay(2000);
+    Stop();
   } else {
     // Check for user input if distance is safe
     if (Bluetooth.available() > 0) {
       val = Bluetooth.read();
+      Serial.print("Received: ");
+      Serial.println(val);
       Stop();
-
       if (val == 'F') {
         forward();
       }

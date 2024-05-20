@@ -7,7 +7,7 @@
 long duration, distance;
 AF_DCMotor motor1(1, MOTOR12_1KHZ);
 AF_DCMotor motor3(3, MOTOR34_1KHZ);
-SoftwareSerial Bluetooth(2, 3); // RX, TX
+SoftwareSerial Bluetooth(0,1); // RX, TX
 int val;
 int Speeed = 255;
 
@@ -35,7 +35,7 @@ void loop() {
 
   // Automatic braking system
   if (distance < 20) {
-    Serial.println("Obstacle detected! Reversing...");
+    Serial.println("Obstacle detected");
     back();
     delay(2000);
     Stop();
@@ -70,14 +70,14 @@ void loop() {
 void forward() {
   motor1.setSpeed(Speeed);
   motor1.run(FORWARD);
-  motor3.setSpeed(Speeed);
+  motor3.setSpeed(252);
   motor3.run(FORWARD);
 }
 
 void back() {
   motor1.setSpeed(Speeed);
   motor1.run(BACKWARD);
-  motor3.setSpeed(Speeed);
+  motor3.setSpeed(252);
   motor3.run(BACKWARD);
 }
 

@@ -1,94 +1,87 @@
 #include <AFMotor.h>
- 
-//initial motors pin
+#include <SoftwareSerial.h>
+
+// Define motor ports on the Adafruit Motor Shield
 AF_DCMotor motor1(1, MOTOR12_1KHZ);
 AF_DCMotor motor3(3, MOTOR34_1KHZ);
- 
-int val;
-int Speeed = 255;
- 
-void setup()
-{
-  Serial.begin(9600);  
-}
-void loop(){
-  if(Serial.available() > 0){
-    val = Serial.read();
-     
-    Stop();
-     
-          if (val == 'F'){
-          forward();
-          }
- 
-          if (val == 'B'){
-          back();
-          }
- 
-          if (val == 'L'){
-          left();
-          }
- 
-          if (val == 'R'){
-          right();
-          }
 
-          if (val == 'T'){
-          Stop();
-          }
+// Define Bluetooth module pins (using SoftwareSerial)
+SoftwareSerial Bluetooth(2, 3); // RX, TX
+
+// Define speed for the motors
+const int SPEED = 255;
+
+void setup() {
+  Serial.begin(9600);
+  Bluetooth.begin(9600);
+  Serial.println("Motor and Bluetooth Test");
+}
+
+void loop() {
+  if (Bluetooth.available() > 0) {
+    char command = Bluetooth.read();
+    Serial.print("Received: ");
+    Serial.println(command);
+
+    switch (command) {
+      case 'F':
+        forward();
+        break;
+      case 'B':
+        back();
+        break;
+      case 'L':
+        left();
+        break;
+      case 'R':
+        right();
+        break;
+      case 'T':
+        Stop();
+        break;
+      default:
+        Serial.println("Invalid command");
+        break;
+    }
   }
 }
-          
- 
-           
- 
- 
- 
-void forward()
-{
-  motor1.setSpeed(Speeed); 
-  motor1.run(FORWARD); 
-  motor3.setSpeed(252);
-  motor3.run(FORWARD); 
-}
- 
-void back()
-{
-  motor1.setSpeed(Speeed); 
-  motor1.run(BACKWARD);   
-  motor3.setSpeed(252);
-  motor3.run(BACKWARD);
-  
-}
- 
-void left()
-{
-  motor1.setSpeed(0); //Define maximum velocity
-  motor1.run(RELEASE); //rotate the motor anti-clockwise
-  
-  motor3.setSpeed(Speeed); //Define maximum velocity
-  motor3.run(FORWARD);  //rotate the motor clockwise
-}
- 
-void right()
-{
-  motor1.setSpeed(Speeed); //Define maximum velocity
-  motor1.run(FORWARD); //rotate the motor clockwise
- 
-  motor3.setSpeed(0); //Define maximum velocity
-  motor3.run(RELEASE); //rotate the motor anti-clockwise
- 
-}
- 
 
- 
- 
-void Stop()
-{
-  motor1.setSpeed(0); //Define minimum velocity
-  motor1.run(RELEASE); //stop the motor when release the button
-  
-  motor3.setSpeed(0); //Define minimum velocity
-  motor3.run(RELEASE); //stop the motor when release the button
- 
+void forward() {
+  Serial.println("Forward");
+  motor1.setSpeed(SPEED);
+  motor1.run(FORWARD);
+  motor3.setSpeed(SPEED);
+  motor3.run(FORWARD);
+}
+
+void back() {
+  Serial.println("Backward");
+  motor1.setSpeed(SPEED);
+  motor1.run(BACKWARD);
+  motor3.setSpeed(SPEED);
+  motor3.run(BACKWARD);
+}
+
+void left() {
+  Serial.println("Left");
+  motor1.setSpeed(0); // Stop the left motor
+  motor1.run(RELEASE);
+  motor3.setSpeed(SPEED); // Move the right motor forward
+  motor3.run(FORWARD);
+}
+
+void right() {
+  Serial.println("Right");
+  motor1.setSpeed(SPEED); // Move the left motor forward
+  motor1.run(FORWARD);
+  motor3.setSpeed(0); // Stop the right motor
+  motor3.run(RELEASE);
+}
+
+void Stop() {
+  Serial.println("Stop");
+  motor1.setSpeed(0);
+  motor1.run(RELEASE);
+  motor3.setSpeed(0);
+  motor3.run(RELEASE);
 }

@@ -50,7 +50,7 @@ void forward() {
   Serial.println("Forward");
   motor1.setSpeed(SPEED);
   motor1.run(FORWARD);
-  motor3.setSpeed(SPEED);
+  motor3.setSpeed(252);
   motor3.run(FORWARD);
 }
 
@@ -58,7 +58,7 @@ void back() {
   Serial.println("Backward");
   motor1.setSpeed(SPEED);
   motor1.run(BACKWARD);
-  motor3.setSpeed(SPEED);
+  motor3.setSpeed(252);
   motor3.run(BACKWARD);
 }
 

@@ -9,7 +9,7 @@ AF_DCMotor motor3(3, MOTOR34_1KHZ);
 SoftwareSerial Bluetooth(2, 3); // RX, TX
 
 // Define speed for the motors
-const int SPEED = 255;
+const int SPEED = 200; // Adjust speed as necessary
 
 // Define ultrasonic sensor pins
 #define trigPin 7
@@ -30,10 +30,9 @@ void loop() {
   Serial.print(distance);
   Serial.println(" cm");
 
-  if (distance < 10) {
+  if (distance > 0 && distance < 15) { // Check for valid distance
     Serial.println("Obstacle detected! Stopping and reversing...");
-    Stop();
-    delay(2000);
+
     back();
     delay(2000);
     Stop();
@@ -66,7 +65,7 @@ void loop() {
     }
   }
 
-  delay(100);
+  delay(500);
 }
 
 long getDistance() {
@@ -77,6 +76,10 @@ long getDistance() {
   digitalWrite(trigPin, LOW);
 
   long duration = pulseIn(echoPin, HIGH);
+  if (duration == 0) {
+      Serial.println("Warning: No echo received.");
+      return -1; // Indicate error
+  }
   long distance = duration / 58.2;
   return distance;
 }
